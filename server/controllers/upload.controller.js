@@ -3,6 +3,9 @@ import aws from 'aws-sdk';
 import fs from 'fs';
 import path from 'path';
 import multer from 'multer';
+import {configDotenv} from "dotenv"
+
+configDotenv();
 
 // AWS S3 configuration
 const s3 = new aws.S3({
@@ -31,7 +34,7 @@ const uploadHardcodedVideo = async (req, res) => {
     // S3 upload parameters
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,
-        Key: `videos/${fileName}`,  // Save the file in a 'videos' folder in S3
+        Key: `videos/${fileName}`,  
         Body: fileContent,
         ContentType: 'video/mp4',  // Ensure the content type is correct for video files
     };
