@@ -1,11 +1,13 @@
 
+
 import { useState } from 'react';
 import axios from 'axios';
 import styles from './UploadForm.module.css';
 
-const UploadVideo = () => {
+const UploadChunkVideo = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploading, setUploading] = useState(false);
+    const [progress, setProgress] = useState(0);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -30,38 +32,61 @@ const UploadVideo = () => {
 
             setError('');
             setSelectedFile(file);
+            setProgress(0);
+            setSuccess('');
         }
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleFileUpload = async (file) => {
+        const chunkSize = 0.5 * 1024 * 1024; // 0.5MB chunk size
+        const totalChunks = Math.ceil(file.size / chunkSize);
+        let start = 0;
 
+        setUploading(true);
+
+        for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+            const chunk = file.slice(start, start + chunkSize);
+            start += chunkSize;
+
+            const formData = new FormData();
+            formData.append('filename', file.name);
+            formData.append('chunk', chunk);
+            formData.append('chunkIndex', chunkIndex);
+            formData.append('totalChunks', totalChunks);
+
+            console.log(`Uploading chunk ${chunkIndex + 1} of ${totalChunks}`);
+
+            try {
+                const res = await axios.post('http://localhost:5600/api/v1/upload/chunk-video', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                console.log(res.data);
+
+                // Update progress
+                setProgress(((chunkIndex + 1) / totalChunks) * 100);
+            } catch (error) {
+                console.error('Error uploading chunk:', error);
+                setError('Error uploading file. Please try again.');
+                setUploading(false);
+                return; // Exit if an error occurs
+            }
+        }
+
+        setUploading(false);
+        setSelectedFile(null); // Clear the file input after upload
+        setSuccess('File uploaded successfully!');
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
         if (!selectedFile) {
             setError('No file selected');
             return;
         }
-
-        const formData = new FormData();
-        formData.append('file', selectedFile); // Updated key to 'file'
-
-        setUploading(true);
-        setError('');
-        setSuccess('');
-
-        try {
-            const response = await axios.post('http://localhost:5600/api/v1/upload/video', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            setSuccess('File uploaded successfully!');
-            console.log(response.data);
-        } catch (error) {
-            setError('Error uploading file. Please try again.');
-            console.error('Error uploading file:', error);
-        } finally {
-            setUploading(false);
-        }
+        handleFileUpload(selectedFile);
     };
 
     return (
@@ -75,6 +100,7 @@ const UploadVideo = () => {
                 />
                 {error && <p className={styles.error}>{error}</p>}
                 {success && <p className={styles.success}>{success}</p>}
+                {uploading && <p>Progress: {progress.toFixed(2)}%</p>}
                 <button
                     type="submit"
                     className={styles.uploadButton}
@@ -87,4 +113,4 @@ const UploadVideo = () => {
     );
 };
 
-export default UploadVideo;
+export default UploadChunkVideo;

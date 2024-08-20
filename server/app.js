@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import kafkaPublisherRouter from "./uploadServices/routes/kafkapublisher.route.js"
 
 
 const app = express()
@@ -13,7 +14,7 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   };
-  
+
 app.use(cors(corsOptions));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true, limit: "16kb" })); // To receive data from URL
@@ -22,8 +23,10 @@ app.use(express.urlencoded()); // To receive data from URL
 app.use(express.static("public")); // for file or image storage in server
 app.use(cookieParser());
 
+app.use('/publish', kafkaPublisherRouter);
+
 // Routes import
-import uploadRouter from "./routes/upload.route.js";
+import uploadRouter from "./uploadServices/routes/upload.route.js";
 
 // routes declaration
 app.use("/api/v1/upload", uploadRouter);
