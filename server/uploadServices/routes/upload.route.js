@@ -3,6 +3,7 @@ import { uploadFileToS3, uploadHardcodedVideo} from "../controllers/upload.contr
 import multer from 'multer';
 import { configDotenv } from 'dotenv';
 import { uploadChunkFileToS3 } from "../controllers/uploadChunk.controller.js";
+import { multipartUploadFileToS3 } from "../controllers/multipartUpload.controller.js";
 
 configDotenv(); 
 
@@ -20,7 +21,7 @@ router.route("/video").post(upload.single('file'), uploadFileToS3);
 // Backend Route
 router.route("/chunk-video").post(upload.fields([{ name: "chunk", maxCount: 1 }]), uploadChunkFileToS3);
 
-
+router.route("/multipart-video").post(multipartUploadFileToS3);
 
 router.route("/video-hardcoded").post(uploadHardcodedVideo);
 
