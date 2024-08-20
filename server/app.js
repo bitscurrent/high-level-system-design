@@ -15,6 +15,7 @@ const corsOptions = {
     allowedHeaders: 'Content-Type,Authorization',
   };
 
+
 app.use(cors(corsOptions));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true, limit: "16kb" })); // To receive data from URL
@@ -30,5 +31,7 @@ import uploadRouter from "./uploadServices/routes/upload.route.js";
 
 // routes declaration
 app.use("/api/v1/upload", uploadRouter);
+
+
 
 export {app}
