@@ -2,6 +2,7 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import path from 'path';
+import { addVideoDetailsToDB } from '../database/db.js';
 
 const multipartUploadFileToS3 = async (req, res) => {
   console.log('Upload request received');
@@ -201,5 +202,17 @@ const uploadChunk = async (req, res) => {
  };
  
  
+const uploadToDb = async (req, res) => {
+  try {
+    const videoDetails = req.body;
+    await addVideoDetailsToDB(videoDetails.title, videoDetails.description, videoDetails.author, videoDetails.url);
+    console.log("Adding details to DB");
+    return res.status(200).send("success");
+  } catch (error) {
+    console.log("Error in adding to DB", error);
+    return res.status(400).send("error");
+  }
+}
 
-export { multipartUploadFileToS3, initializeUpload,completeUpload, uploadChunk };
+
+export { multipartUploadFileToS3, initializeUpload,completeUpload, uploadChunk, uploadToDb};

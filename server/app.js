@@ -28,10 +28,12 @@ app.use('/publish', kafkaPublisherRouter);
 
 // Routes import
 import uploadRouter from "./uploadServices/routes/upload.route.js";
+import getAllVideos from './uploadServices/controllers/home.controller.js';
 
 // routes declaration
 app.use("/api/v1/upload", uploadRouter);
 
-
+// routes for home
+app.get("/api/v1/home", getAllVideos)
 
 export {app}

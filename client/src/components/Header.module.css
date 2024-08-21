@@ -1,0 +1,48 @@
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #d82d2d;
+    color: #fff;
+    /* position: fixed; Fixed position to stay at the top */
+    top: 0;
+    width: 100%; 
+    z-index: 1000; /* Ensure it stays on top of other elements */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .logoContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logoIcon {
+    font-size: 28px;
+    margin-right: 10px;
+  }
+  
+  .logoText {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .nav {
+    display: flex;
+  }
+  
+  .navItem {
+    margin-left: 20px;
+    margin-right: 25px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .navIcon {
+    margin-right: 8px;
+  }
+  
