@@ -3,6 +3,7 @@ import AWS from 'aws-sdk';
 import fs from 'fs';
 import path from 'path';
 import { addVideoDetailsToDB } from '../database/db.js';
+import { pushVideoForEncodingToKafka } from './kafkapublisher.controller.js';
 
 const multipartUploadFileToS3 = async (req, res) => {
   console.log('Upload request received');

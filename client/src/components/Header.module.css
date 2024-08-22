@@ -6,7 +6,7 @@
     padding: 10px 20px;
     background-color: #d82d2d;
     color: #fff;
-    /* position: fixed; Fixed position to stay at the top */
+    /* position: fixed; Fixed position to stay at the top, but looks bad, so use wisely. */
     top: 0;
     width: 100%; 
     z-index: 1000; /* Ensure it stays on top of other elements */

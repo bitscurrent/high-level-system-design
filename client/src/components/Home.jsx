@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 
@@ -10,7 +10,7 @@ const Home = () => {
         const getVideos = async () => {
             try {
                 const response = await axios.get("http://localhost:5600/api/v1/home");
-                setVideos(response.data); // Assuming the response contains an array of video data
+                setVideos(response.data); // Bcuz the response contains an array of video data
                 console.log(response, "RESPONSE")
             } catch (error) {
                 console.error("Error fetching videos:", error);

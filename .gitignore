@@ -25,3 +25,10 @@ dist-ssr
 server/.env
 server/50MB.mp4
 server/82MBVideo.mp4
+server/ca.pem
+server/transcodeServices/5MB.mp4
+server/transcodeServices/50MB.mp4
+server/transcodeServices/ca.pem
+server/uploadServices/ca.pem
+
+server/transcodeServices/output
