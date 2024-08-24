@@ -30,7 +30,8 @@ const ParallelUpload = () => {
       const initializeRes = await axios.post('http://localhost:5600/api/v1/upload/initialize', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
+        },
+        withCredentials: true // Ensure cookies are sent with the request
       });
 
       const { uploadId } = initializeRes.data;
@@ -55,7 +56,9 @@ const ParallelUpload = () => {
         const uploadPromise = axios.post('http://localhost:5600/api/v1/upload/', chunkFormData, {
           headers: {
             'Content-Type': 'multipart/form-data'
-          }
+          },
+          withCredentials: true // Ensure cookies are sent with the request
+      
         });
 
         uploadPromises.push(uploadPromise);
@@ -72,7 +75,13 @@ const ParallelUpload = () => {
         title: title,
         description: description,
         author: author
-      });
+      },
+    
+      {
+        withCredentials: true // Ensure cookies are sent with the request
+      }
+
+    );
 
       console.log('Upload complete:', completeRes.data);
 

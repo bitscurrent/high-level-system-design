@@ -32,3 +32,4 @@ server/transcodeServices/ca.pem
 server/uploadServices/ca.pem
 
 server/transcodeServices/output
+client/.env

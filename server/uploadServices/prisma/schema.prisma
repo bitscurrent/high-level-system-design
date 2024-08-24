@@ -14,3 +14,11 @@ model VideoData {
   url         String?
   id          Int     @id @default(autoincrement())
 }
+
+model users {
+  username String @db.VarChar(30) @unique
+  password String @db.VarChar(100)
+  fullName String @db.VarChar(50)
+  email    String @db.VarChar(50) @unique
+  id       String @id @db.Uuid
+}

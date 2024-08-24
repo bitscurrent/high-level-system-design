@@ -4,6 +4,7 @@ import multer from 'multer';
 import { configDotenv } from 'dotenv';
 import { uploadChunkFileToS3 } from "../controllers/uploadChunk.controller.js";
 import { completeUpload, initializeUpload, multipartUploadFileToS3, uploadChunk } from "../controllers/multipartUpload.controller.js";
+import authMiddleware from "../middlewares/auth.middleware.js";
 
 configDotenv(); 
 
@@ -25,11 +26,11 @@ router.route("/multipart-video").post(multipartUploadFileToS3);
 
 
 // Route for initializing upload
-router.post('/initialize', upload.none(), initializeUpload);
+router.post('/initialize', authMiddleware, upload.none(), initializeUpload);
 // Route for uploading individual chunks
-router.post('/', upload.single('chunk'), uploadChunk);
+router.post('/',authMiddleware, upload.single('chunk'), uploadChunk);
 // Route for completing the upload
-router.post('/complete', completeUpload);
+router.post('/complete',authMiddleware, completeUpload);
 
 
 router.route("/video-hardcoded").post(uploadHardcodedVideo);

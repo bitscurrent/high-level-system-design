@@ -15,6 +15,8 @@ const UploadForm = () => {
   };
 
   const handleUpload = async () => {
+
+    // Zod and express validation can be added later.
     if (!title || !author) {
       alert('Title and Author are required fields.');
       return;
@@ -26,7 +28,7 @@ const UploadForm = () => {
     }
 
     try {
-      // Step 1: Initialize the upload
+      // Step 1: Initialize the upload (this will add info such as filename)
       const formData = new FormData();
       formData.append('filename', selectedFile.name);
 

@@ -1,29 +1,33 @@
+
+
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Home';
-import UploadForm from './components/MultipartUpload';
 import ParallelUpload from './components/Parallel';
-import UploadChunkVideo from './components/UploadChunkVideo';
-import UploadVideo from './components/UploadForm';
-import { Route, BrowserRouter, Routes } from "react-router-dom";
 import VideoPlayer from './components/VideoPlayer';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Logout from './components/Logout';
+import Protected from './components/Protected'; // Import the Protected component
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 
 const App = () => {
     return (
         <>
             <BrowserRouter>
                 <Header />
-               
-                <Routes>                  
-                    <Route path="/home" element={<Home />}> </Route>
-                    {/* <Route path="/upload" element={<UploadVideo />} /> */}
-                    {/* <Route path="/chunk-upload" element={<UploadChunkVideo />} /> */}
-                    {/* <Route path="/multipart-upload" element={<UploadForm />} /> */}
-                    <Route path="/upload" element={<ParallelUpload />} />
-                    <Route path="/videoplayer" element={ <VideoPlayer />} />
-
+                <Logout />
+                <Routes>
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/videoplayer" element={<VideoPlayer />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route
+                        path="/upload"
+                        element={<Protected Component={ParallelUpload} />}
+                    />
                 </Routes>
-            </BrowserRouter>  
+            </BrowserRouter>
         </>
     );
 }
